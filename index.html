@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Explore aPA</title>
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/g/riot@2.2(riot.min.js+compiler.min.js)"></script>
+	<script type="riot/tag" src="tags/app.tag"></script>
+	<script type="riot/tag" src="tags/ui.tag"></script>
+	<script type="riot/tag" src="tags/ui-button.tag"></script>
+	<script type="riot/tag" src="tags/gallery-item.tag"></script>
+	<script type="riot/tag" src="tags/gallery.tag"></script>
+	<script type="riot/tag" src="tags/map.tag"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript">
+
+	var artworks = [
+		{name: "Bluecadet", desc:'Lorem ipsum bluecadet', lat: 39.973665, lon:-75.134005},
+		{name: "Will House",desc:'Hi I live here', lat: 39.963011, lon:-75.157218},
+		{name: "Mike's House",desc:'Mike and Steve live here', lat: 39.962994, lon:-75.141753},
+		{name: "Palm", desc:'Eat here often', lat: 39.968810, lon:-75.134125} 
+	]
+
+	function initializeMap() {
+	  var mapProp = {
+	    center:new google.maps.LatLng(39.961455,-75.148097),
+	    zoom:12,
+	    mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+	  map = new google.maps.Map(document.getElementById("map"),mapProp);
+	}
+
+	function drawPoint(lat,lon){
+		new google.maps.Marker({
+			position: new google.maps.LatLng(lat,lon),
+		})
+		.setMap(map);
+	}
+
+	function drawPoints(){
+		_.each(artworks,function(dataItem){
+			drawPoint( dataItem.lat , dataItem.lon );
+			console.log( dataItem );
+		})
+	}
+
+	function filterPoints(){
+		console.log("Filtering Points");
+	}
+
+	</script>
+</head>
+
+<body>
+	<app><app/>	
+	<script>
+		riot.mount('app');
+	</script>
+</body>
+</html>
