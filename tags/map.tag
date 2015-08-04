@@ -6,20 +6,16 @@
 			initializeMap();
 		})
 
-		this.on('unmount',function(e){
-			console.log("map unmounted");
-		});
-
-		this.on('update',function(e){
-			console.log("map updated");
-		});
+		 this.on('mount update unmount', function(eventName) {
+		    console.info(eventName);
+		  })
 	</script>
 
 	<style scoped>
 		:scope{
 			display:block;
-			width: 100%;
-			height: 300px;
+			width: 100vw;
+			height: 40vh;
 		}
 	</style>
 </map>

@@ -6,13 +6,12 @@
 	<button onclick="{drawPoints}">Draw Points</button>
 	<button onclick="{filterPoints}">Filter Points</button>
 
-	<input placeholder="username" name="username">
-    <input placeholder="password" name="password">
+	<select>
+		<option each="{regions}" value="{this.id}">{this.display}</option>
+	</select>
 
 	<script>
-		this.on('mount update unmount', function(eventName) {
-			console.info(eventName);
-		})
+
 	</script>
 	
 	<style scoped>

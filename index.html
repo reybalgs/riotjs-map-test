@@ -14,10 +14,20 @@
 	<script type="text/javascript">
 
 	var artworks = [
-		{name: "Bluecadet", desc:'Lorem ipsum bluecadet', lat: 39.973665, lon:-75.134005},
-		{name: "Will House",desc:'Hi I live here', lat: 39.963011, lon:-75.157218},
-		{name: "Mike's House",desc:'Mike and Steve live here', lat: 39.962994, lon:-75.141753},
-		{name: "Palm", desc:'Eat here often', lat: 39.968810, lon:-75.134125} 
+		{name: "Bluecadet", desc:'Lorem ipsum bluecadet', lat: 39.973665, lon:-75.134005, region: 1},
+		{name: "Will House",desc:'Hi I live here', lat: 39.963011, lon:-75.157218, region: 3},
+		{name: "Mike's House",desc:'Mike and Steve live here', lat: 39.962994, lon:-75.141753, region: 2},
+		{name: "Palm", desc:'Eat here often', lat: 39.968810, lon:-75.134125, region: 1},
+		{name: "Museum", desc:'Most notable from the film "Rocky"', lat: 39.965222, lon:-75.180472, region: 4},
+		{name: "Sir Caleb's House", desc:"Master Caleb's Residence", lat: 39.967247, lon:-75.164780, region: 4}, 
+		{name: "STAR", desc:"Street Tails Animal Rescue", lat: 39.967261, lon:-75.141187, region: 2}
+	]
+
+	var regions = [
+		{id: '1', display:"Fishtown"},
+		{id: '2', display:"Northern Liberties"},
+		{id: '3', display:"East Poplar"},
+		{id: '4', display:"Fairmount"}
 	]
 
 	function initializeMap() {
