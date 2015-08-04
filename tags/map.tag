@@ -2,13 +2,9 @@
 
 <script>
 	this.on('mount',function(){
-		console.log("map mounted");
 		initializeMap();
+		drawPoints();
 	})
-
-	 this.on('mount update unmount', function(eventName) {
-	    console.info(eventName);
-	  })
 </script>
 
 <style scoped>

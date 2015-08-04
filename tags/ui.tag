@@ -1,19 +1,12 @@
 <ui>
-	<ui-button mode="map" label="Map"></ui-button>
-	<ui-button mode="gallery" label="Gallery"></ui-button>
-	<ui-button mode="list" label="List"></ui-button>
-	
-	<button onclick="{drawPoints}">Draw Points</button>
-	<button onclick="{filterPoints}">Filter Points</button>
+	<ui-button onclick="{modeSet}" mode="map" label="Map"></ui-button>
+	<ui-button onclick="{modeSet}" mode="gallery" label="Gallery"></ui-button>
+	<ui-button onclick="{modeSet}" mode="list" label="List"></ui-button>
 
 	<select onchange="{filterPoints}" name="regionSelect">
 		<option each="{regions}" value="{this.id}">{this.display}</option>
 	</select>
 
-	<script>
-
-	</script>
-	
 	<style scoped>
 		:scoped{
 			background-color: gray;
@@ -21,5 +14,4 @@
 			display:block;
 		}
 	</style>
-	
 </ui>
