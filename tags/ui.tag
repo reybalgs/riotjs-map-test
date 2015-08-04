@@ -6,7 +6,7 @@
 	<button onclick="{drawPoints}">Draw Points</button>
 	<button onclick="{filterPoints}">Filter Points</button>
 
-	<select>
+	<select onchange="{filterPoints}" name="regionSelect">
 		<option each="{regions}" value="{this.id}">{this.display}</option>
 	</select>
 

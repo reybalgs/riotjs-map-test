@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Explore aPA</title>
+	<style type="text/css" src="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"></style>
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/g/riot@2.2(riot.min.js+compiler.min.js)"></script>
@@ -13,22 +14,29 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 	<script type="text/javascript">
 
-	var artworks = [
-		{name: "Bluecadet", desc:'Lorem ipsum bluecadet', lat: 39.973665, lon:-75.134005, region: 1},
-		{name: "Will House",desc:'Hi I live here', lat: 39.963011, lon:-75.157218, region: 3},
-		{name: "Mike's House",desc:'Mike and Steve live here', lat: 39.962994, lon:-75.141753, region: 2},
-		{name: "Palm", desc:'Eat here often', lat: 39.968810, lon:-75.134125, region: 1},
-		{name: "Museum", desc:'Most notable from the film "Rocky"', lat: 39.965222, lon:-75.180472, region: 4},
-		{name: "Sir Caleb's House", desc:"Master Caleb's Residence", lat: 39.967247, lon:-75.164780, region: 4}, 
-		{name: "STAR", desc:"Street Tails Animal Rescue", lat: 39.967261, lon:-75.141187, region: 2}
-	]
+	var points = [],
 
-	var regions = [
-		{id: '1', display:"Fishtown"},
-		{id: '2', display:"Northern Liberties"},
-		{id: '3', display:"East Poplar"},
-		{id: '4', display:"Fairmount"}
-	]
+		infowindow = new google.maps.InfoWindow({
+    		content: ''
+		}),
+
+		artworks = [
+			{name: "Bluecadet", desc:'Lorem ipsum bluecadet', lat: 39.973665, lon:-75.134005, region: 1},
+			{name: "Will House",desc:'Hi I live here', lat: 39.963011, lon:-75.157218, region: 3},
+			{name: "Mike's House",desc:'Mike and Steve live here', lat: 39.962994, lon:-75.141753, region: 2},
+			{name: "Palm", desc:'Eat here often', lat: 39.968810, lon:-75.134125, region: 1},
+			{name: "Museum", desc:'Most notable from the film "Rocky"', lat: 39.965222, lon:-75.180472, region: 4},
+			{name: "Sir Caleb's House", desc:"Master Caleb's Residence", lat: 39.967247, lon:-75.164780, region: 4}, 
+			{name: "STAR", desc:"Street Tails Animal Rescue", lat: 39.967261, lon:-75.141187, region: 2}
+		],
+
+		regions = [
+			{id: '', display:"All"},	
+			{id: '1', display:"Fishtown"},
+			{id: '2', display:"Northern Liberties"},
+			{id: '3', display:"East Poplar"},
+			{id: '4', display:"Fairmount"}
+		];
 
 	function initializeMap() {
 	  var mapProp = {
@@ -39,23 +47,57 @@
 	  map = new google.maps.Map(document.getElementById("map"),mapProp);
 	}
 
-	function drawPoint(lat,lon){
-		new google.maps.Marker({
-			position: new google.maps.LatLng(lat,lon),
-		})
-		.setMap(map);
+	function drawPoint(pointData){
+		var p = pointData;
+
+		var point = new google.maps.Marker({
+			title: p.title,
+			region: p.region,
+			position: new google.maps.LatLng(p.lat,p.lon),
+		});
+		
+		point.setMap(map);
+
+		points.push(point);
+		
+		google.maps.event.addListener(point, 'click', (function (point) {
+        return function () {
+            console.log('Point clicked');
+            infowindow.setContent(point.title);
+            infowindow.open(map, point);
+            map.panTo(this.getPosition());
+            map.setZoom(15);
+        }
+    	})(point));
 	}
 
 	function drawPoints(){
-		_.each(artworks,function(dataItem){
-			drawPoint( dataItem.lat , dataItem.lon );
-			console.log( dataItem );
+		_.each(artworks,function(artItem){
+			drawPoint({
+				title: artItem.name,
+				region: artItem.region,
+				lat: artItem.lat, 
+				lon: artItem.lon
+			});
+			console.log( artItem );
 		})
 	}
 
-	function filterPoints(){
-		console.log("Filtering Points");
+	function filterPoints(e){
+		var region = this.regionSelect.value;
+		console.log(region);
+		_.each(points,function(thisPoint){
+			console.log(thisPoint);
+			if(thisPoint.region == region || region.length ===0) {
+				thisPoint.setVisible(true);
+			}
+			else{
+				thisPoint.setVisible(false);
+			}
+		})
 	}
+
+	
 
 	</script>
 </head>
