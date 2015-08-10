@@ -4,9 +4,8 @@
 	<script>
 		this.modeSet = function(e) {
 			mode = this.opts.mode;
-			//this.update();
-			//appUpdate();//trying to call app's function to cause cascade of data
-			this.parent.update();//interesting this line is commented and above isnt
+			window.state.mode = this.opts.mode;
+			document.querySelector("app")._tag.update();
 		}
 	</script>
 
