@@ -28,12 +28,13 @@
 		});
 
 	this.on('mount',function(){
+		console.log('--map mount');
 		this.initializeMap();
-		this.drawPoints(window.state);
+		this.drawPoints();
 	});
 
 	this.on('update', function(){
-		this.drawPoints();
+		console.log("--map update");
 		filterPoints(window.state);
 	})
 

@@ -1,7 +1,7 @@
 <app name="appy">	
 	<ui></ui>
 	<!-- <map if="{mode == 'map'}" name="mappy" id="map"></map> -->
-	<map if="{mode == 'map'}" name="mappy" id="map"></map>
+	<map if="{mode == 'map'}" name="mappy" id="map"></map><!--Won't work if you check against window.state.mode-->
 	<gallery if="{mode == 'gallery'}" name="gally"><gallery/>
 	<listing if="{mode == 'list'}" name="listy"><listing/>
 
@@ -17,14 +17,8 @@
 
 		window.results = [];
 
-		this.on('update',function(){
-			console.log('App updated');
-			console.log(artworks);
-
-			filter(window.state);
-		});
-
-		function filter(state){
+		
+		function filterData(state){
 			window.results = artworks.filter(function(artNode){
 				if(artNode.mww == state.mww || state.mww == false){
 					if(artNode.region == state.region || state.region == ''){
@@ -35,11 +29,13 @@
 					}
 				}
 			});
-
-			console.log("#------");
-			console.log("#",state);
-			console.log("#",results);
 		}
+
+
+		this.on('update',function(){
+			console.log('App updated');
+			filterData(window.state);
+		});
 
 		this.on('mount',function(){
 			console.log('App mounted');

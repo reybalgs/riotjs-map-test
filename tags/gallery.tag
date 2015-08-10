@@ -5,11 +5,8 @@
 	this.on('mount',function(){
 		console.log("gallery mounted");
 	});
-
 	this.on('update',function(){
 		console.log('gallery updated');
-
 	});
 	</script>
-
 </gallery>

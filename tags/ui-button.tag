@@ -1,5 +1,5 @@
 <ui-button>
-	<button name="{opts.mode}-mode-button" onclick="{modeSet}" mode="{opts.mode}" class="{active : mode == opts.mode}">{opts.label}</button>
+	<button name="{opts.mode}-mode-button" onclick="{modeSet}" mode="{opts.mode}" class="{active : window.state.mode == opts.mode}">{opts.label}</button>
 	
 	<script>
 		this.modeSet = function(e) {
