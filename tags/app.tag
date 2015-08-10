@@ -6,18 +6,8 @@
 	<listing if="{mode == 'list'}" name="listy"><listing/>
 
 	<script>
-
-		window.state = {//state bundle to keep track of everything in one place
-			mode: 'map',
-			mww: false,
-			filter: '',
-			search: '',
-			region: '',
-		};
-
 		window.results = [];
 
-		
 		function filterData(state){
 			window.results = artworks.filter(function(artNode){
 				if(artNode.mww == state.mww || state.mww == false){
@@ -35,6 +25,11 @@
 		this.on('update',function(){
 			console.log('App updated');
 			filterData(window.state);
+			riot.route.exec(function(mode, filter) {
+				console.log("url params",mode,filter);
+				// if(mode == 'map' || mode == 'gallery' ||mode == 'list')window.state.mode = mode;
+				// else window.state.mode = 'map';
+			})
 		});
 
 		this.on('mount',function(){
