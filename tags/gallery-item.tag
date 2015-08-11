@@ -1,6 +1,6 @@
 <gallery-item>
 	<div>
-		<b>{this.name}:</b><span>{this.desc}</span>
+		<b>{name}:</b><span>{desc}</span>
 	</div>
 	<style scoped>
 		/*:scope{

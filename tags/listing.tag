@@ -1,7 +1,7 @@
 <listing>
-	<ul>
-		<p each="{window.results}"><b>{this.name}:</b><span>{this.desc}</span></p>
-	</ul>
+	<ol>
+		<li each="{window.results}"><b>{name}:</b><span>{desc}</span></li>
+	</ol>
 
 	<script>
 	this.on('mount',function(){
@@ -10,7 +10,6 @@
 
 	this.on('update',function(){
 		console.log('listing updated');
-
 	});
 	</script>
 </listing>

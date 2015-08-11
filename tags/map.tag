@@ -2,6 +2,8 @@
 
 <script>
 
+	var self = this;
+
  	var map,
  		mapMarkers = [],
 		regMarker = {
@@ -23,23 +25,27 @@
 			anchor: new google.maps.Point(12, 36)
  		},
 		styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"labels.text","stylers":[{"saturation":"-100"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"lightness":"52"},{"gamma":"1.00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"saturation":"-100"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#e5e9bb"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"saturation":"-100"}]},{"featureType":"poi.park","elementType":"labels.icon","stylers":[{"saturation":"-100"}]},{"featureType":"poi.place_of_worship","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi.sports_complex","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.sports_complex","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"gamma":"1.00"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.fill","stylers":[{"color":"#f8bb1b"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#62cccb"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]}],
+
  		infowindow = new google.maps.InfoWindow({
     		content: ''
 		});
 
-	this.on('mount',function(){
+	self.on('mount',function(){
 		console.log('map mount');
-		this.initializeMap();
-		this.drawPoints();
+		self.initializeMap();
+		self.drawPoints();
 	});
 
-	this.on('update', function(){
-		console.log("map update");
-		filterPoints(window.state);
+	RiotControl.on('state_changed', function(stateObj){
+		filterPoints(stateObj.state)
+		self.update();
 	})
 
+	// RiotControl.on('map_init', function(stateObj){
+	// 	self.update();
+	// })
 
-	this.initializeMap = function() {
+	self.initializeMap = function() {
 	  var mapProp = {
 	    center:new google.maps.LatLng(39.961455,-75.148097),
 	    zoom:12,
@@ -71,7 +77,6 @@
 		
 		google.maps.event.addListener(point, 'click', (function (point) {
 	        return function () {
-	            console.log('Point clicked');
 	            infowindow.setContent('<strong>' + point.title + "</strong><br>" + point.desc);
 	            infowindow.open(map, point);
 	            map.panTo(this.getPosition());
@@ -80,8 +85,8 @@
     	})(point));
 	}
 
-	this.drawPoints = function(){
-		_.each(window.results,function(artItem){
+	self.drawPoints = function(stateObj){
+		_.each(window.artworks,function(artItem){
 			drawPoint({
 				title: artItem.name,
 				mww: artItem.mww,
@@ -116,6 +121,10 @@
 			}
 		})
 	}
+
+	RiotControl.on('state_changed',function(){
+		self.update();
+	})
 
 </script>
 

@@ -1,12 +1,18 @@
 <ui-button>
-	<button name="{opts.mode}-mode-button" onclick="{modeSet}" mode="{opts.mode}" class="{active : window.state.mode == opts.mode}">{opts.label}</button>
+	<button name="{opts.mode}-mode-button" onclick="{modeSet}" mode="{opts.mode}" class="{active : active == opts.mode}">{opts.label}</button>
 	
 	<script>
-		this.modeSet = function(e) {
-			mode = this.opts.mode;
-			window.state.mode = this.opts.mode;
-			document.querySelector("app")._tag.update();
+		var self = this;
+
+		self.modeSet = function(e) {
+			RiotControl.trigger('modeSet', this.opts.mode);
 		}
+
+		RiotControl.on('state_changed',function(stateObj){
+			self.active = stateObj.state.mode;
+			self.update();
+		});
+
 	</script>
 
 	<style scoped>

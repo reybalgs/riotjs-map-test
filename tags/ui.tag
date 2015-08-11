@@ -1,32 +1,31 @@
 <ui>
-	<ui-button onclick="{modeSet}" mode="map" label="Map"></ui-button>
-	<ui-button onclick="{modeSet}" mode="gallery" label="Gallery"></ui-button>
-	<ui-button onclick="{modeSet}" mode="list" label="List"></ui-button>
+	<ui-button mode="map" label="Map"></ui-button>
+	<ui-button mode="gallery" label="Gallery"></ui-button>
+	<ui-button mode="list" label="List"></ui-button>
 
 	<select onchange="{regionSet}" name="regionUI">
 		<option each="{regions}" value="{this.id}">{this.display}</option>
 	</select>
-	<input type="text" name="searchUI" placeholder='Search Things' onkeyup="{searchSet}"> 
+	<input type="text" name="searchUI" placeholder='Search Things' value='{window.state.search}' onkeyup="{searchSet}"> 
  	<input type="checkbox" name="mwwUI" value="mww" onchange='{mwwSet}'>MWW<br>
 
 
 	<script>
-		this.mwwSet = function(){
-			window.state.mww = this.mwwUI.checked;
-			console.log(window.state.mww);
-			document.querySelector("app")._tag.update();
+		var self = this;
+
+		self.mwwSet = function(){
+			console.log("mwwSet");
+			RiotControl.trigger('mwwSet', this.mwwUI.checked);
 		}
 
-		this.regionSet = function(){
-			window.state.region = this.regionUI.value;
-			console.log(window.state.region);
-			document.querySelector("app")._tag.update();
+		self.regionSet = function(){
+			console.log("regionSet");
+			RiotControl.trigger('regionSet', this.regionUI.value);
 		}
 
-		this.searchSet = function(e) {
-			search = this.searchUI.value;
-			window.state.search = this.searchUI.value;
-			document.querySelector("app")._tag.update();
+		self.searchSet = function() {
+			console.log("searchSet");
+			RiotControl.trigger('searchSet', this.searchUI.value);
 		}
 	</script>
 	<style scoped>

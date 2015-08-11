@@ -6,56 +6,49 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/g/riot@2.2(riot.min.js+compiler.min.js)"></script>
 	<script type="riot/tag" src="tags/app.tag"></script>
+	<script type="riot/tag" src="tags/main-view.tag"></script>
 	<script type="riot/tag" src="tags/map.tag"></script>
 	<script type="riot/tag" src="tags/ui.tag"></script>
 	<script type="riot/tag" src="tags/ui-button.tag"></script>
+	<script type="riot/tag" src="tags/listing.tag"></script>
 	<script type="riot/tag" src="tags/gallery.tag"></script>
 	<script type="riot/tag" src="tags/gallery-item.tag"></script>
-	<script type="riot/tag" src="tags/listing.tag"></script>
+	<script src="riotcontrol.js"></script>
+    <script src="exploreStore.js"></script>
+	
 	<script type="text/javascript">
 
-	var points = [],
+		riot.route.exec(function(modeParam,filterParam,searchParam) {
+			//routing(modeParam,filterParam,searchParam);
+			//console.log("URL Params:",modeParam,filterParam);
+			// else window.state.mode = 'map';
+		})
+		riot.route(function(modeParam,filterParam,searchParam) {
+			//routing(modeParam,filterParam,searchParam);
+		})
 
-		artworks = [
-			{name: "Bluecadet", desc:'Oh hi dis where I work',mww: true, lat: 39.973665, lon:-75.134005, region: 1},
-			{name: "Will House",desc:'Hi I live here', mww: false , lat: 39.963011, lon:-75.157218, region: 3},
-			{name: "Mike's House",desc:'Mike and Steve live here', mww: false , lat: 39.962994, lon:-75.141753, region: 2},
-			{name: "Palm", desc:'Eat here often', lat: 39.968810, mww: true , lon:-75.134125, region: 1},
-			{name: "Museum", desc:'Most notable from the film "Rocky"', mww: false , lat: 39.965222, lon:-75.180472, region: 4},
-			{name: "Sir Caleb's House", desc:"Master Caleb's Residence", mww: true ,lat: 39.967247, lon:-75.164780, region: 4}, 
-			{name: "STAR", desc:"Street Tails Animal Rescue", mww: false ,lat: 39.967261, lon:-75.141187, region: 2},
-			{name: "Liacouras Center", desc:"Home of Temple Basketball", mww: true ,lat: 39.979908, lon:-75.158308	, region: 5},
-			{name: "College of Engineering", desc:"Home of Temple Engineering", lat: 39.982371, lon:-75.153023, region: 5},
-			{name: "Temple IBC", desc:"Best Gym", lat: 39.979032, mww: true ,lon:-75.159148, region: 5},
-			{name: "Old Temple House", desc:"Lived here once upon a time", mww: false ,lat: 39.985048, lon:-75.163204, region: 5},
-			{name: "Meek's Neighborhood", desc:'"Meet me at twentysomething and berks"', mww: true , lat: 39.983646, lon:-75.171908, region: 5}
-		],
 
-		regions = [
-			{id: '', display:"All"},	
-			{id: '1', display:"Fishtown"},
-			{id: '2', display:"Northern Liberties"},
-			{id: '3', display:"East Poplar"},
-			{id: '4', display:"Fairmount"},
-			{id: '5', display:"North Philly"},
-		];
+		function routing(modeP,filterP,searchP){
+			console.log("##",modeP,filterP,searchP);
+			if(modeP == 'list') window.state.mode = 'list';
+			else if(modeP == 'gallery') window.state.mode = 'gallery';
+			else window.state.mode = 'map';
+			
+			if(filterP != undefined || filterP == '') window.state.filter = filterP;
+			else window.state.filter = 'all';
 
-		
-		window.state = {//state bundle to keep track of everything in one place
-			mode: 'map',
-			mww: false,
-			filter: '',
-			search: '',
-			region: '',
-		};
-	
-
+			if(searchP != undefined || searchP == '') window.state.search = searchP;
+			else window.state.search = '';
+			console.log("##",window.state.mode,window.state.filter,window.state.search);
+		}
 	</script>
 </head>
 
 <body>
 	<app><app/>	
 	<script>
+		var exploreStore = new ExploreStore() // Create a store instance.
+      	RiotControl.addStore(exploreStore) // Register the store in central dispatch.
 		riot.mount('app');
 	</script>
 </body>
