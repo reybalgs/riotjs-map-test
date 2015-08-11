@@ -49,11 +49,17 @@ function ExploreStore() {
 
   self.on('stateInit', function() {
     filterData();
+
+    riot.route.exec(function(modeParam,filterParam,searchParam) {
+      self.state.mode = modeParam;
+      self.state.filter = filterParam;
+      self.state.search = searchParam;
+    })
     
-    // self.trigger('map_init', {
-    //   state: self.state, 
-    //   artworks:self.artworks,
-    // })
+    self.trigger('map_init', {
+      state: self.state, 
+      artworks:self.artworks,
+    })
 
     self.trigger('state_changed', {
       state: self.state, 

@@ -12,7 +12,6 @@
 			self.active = stateObj.state.mode;
 			self.update();
 		});
-
 	</script>
 
 	<style scoped>

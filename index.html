@@ -6,7 +6,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/g/riot@2.2(riot.min.js+compiler.min.js)"></script>
 	<script type="riot/tag" src="tags/app.tag"></script>
-	<script type="riot/tag" src="tags/main-view.tag"></script>
 	<script type="riot/tag" src="tags/map.tag"></script>
 	<script type="riot/tag" src="tags/ui.tag"></script>
 	<script type="riot/tag" src="tags/ui-button.tag"></script>
@@ -15,17 +14,9 @@
 	<script type="riot/tag" src="tags/gallery-item.tag"></script>
 	<script src="riotcontrol.js"></script>
     <script src="exploreStore.js"></script>
-	
 	<script type="text/javascript">
 
-		riot.route.exec(function(modeParam,filterParam,searchParam) {
-			//routing(modeParam,filterParam,searchParam);
-			//console.log("URL Params:",modeParam,filterParam);
-			// else window.state.mode = 'map';
-		})
-		riot.route(function(modeParam,filterParam,searchParam) {
-			//routing(modeParam,filterParam,searchParam);
-		})
+		
 
 
 		function routing(modeP,filterP,searchP){
@@ -47,8 +38,8 @@
 <body>
 	<app><app/>	
 	<script>
-		var exploreStore = new ExploreStore() // Create a store instance.
-      	RiotControl.addStore(exploreStore) // Register the store in central dispatch.
+		var exploreStore = new ExploreStore(); // Create a store instance.
+      	RiotControl.addStore(exploreStore); // Register the store in central dispatch.
 		riot.mount('app');
 	</script>
 </body>

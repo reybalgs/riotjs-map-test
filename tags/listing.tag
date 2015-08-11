@@ -1,15 +1,14 @@
 <listing>
 	<ol>
-		<li each="{window.results}"><b>{name}:</b><span>{desc}</span></li>
+		<li each="{results}"><b>{name}:</b><span>{desc}</span></li>
 	</ol>
 
 	<script>
-	this.on('mount',function(){
-		console.log("listing mounted");
-	});
+	var self = this;
 
-	this.on('update',function(){
-		console.log('listing updated');
+	RiotControl.on('state_changed',function(stateObj){
+		self.results = stateObj.results;
+		self.update();
 	});
 	</script>
 </listing>
