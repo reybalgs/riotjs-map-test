@@ -16,22 +16,20 @@
     <script src="exploreStore.js"></script>
 	<script type="text/javascript">
 
+	function routing(modeP,filterP,searchP){
+		console.log("##",modeP,filterP,searchP);
+		if(modeP == 'list') window.state.mode = 'list';
+		else if(modeP == 'gallery') window.state.mode = 'gallery';
+		else window.state.mode = 'map';
 		
+		if(filterP != undefined || filterP == '') window.state.filter = filterP;
+		else window.state.filter = 'all';
 
+		if(searchP != undefined || searchP == '') window.state.search = searchP;
+		else window.state.search = '';
+		console.log("##",window.state.mode,window.state.filter,window.state.search);
+	}
 
-		function routing(modeP,filterP,searchP){
-			console.log("##",modeP,filterP,searchP);
-			if(modeP == 'list') window.state.mode = 'list';
-			else if(modeP == 'gallery') window.state.mode = 'gallery';
-			else window.state.mode = 'map';
-			
-			if(filterP != undefined || filterP == '') window.state.filter = filterP;
-			else window.state.filter = 'all';
-
-			if(searchP != undefined || searchP == '') window.state.search = searchP;
-			else window.state.search = '';
-			console.log("##",window.state.mode,window.state.filter,window.state.search);
-		}
 	</script>
 </head>
 

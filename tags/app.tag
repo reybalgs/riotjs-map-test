@@ -1226,11 +1226,22 @@
   }
 ]
 
-		riot.route(function(modeParam,filterParam,searchParam) {
-			//routing(modeParam,filterParam,searchParam);
+		riot.route(function(modeP) {
+			console.log("ROUTE 2");
+			RiotControl.trigger('route_set',{
+	      		modeParam: modeP,
+	      	});
 		})
 
+		riot.route.exec(function(modeP) {
+			console.log("ROUTE 1");
+	      	RiotControl.trigger('route_set',{
+	      		modeParam: modeP
+	      	});
+    	})
+
 		self.on('mount',function(){
+			console.log("MOUNT");
 			RiotControl.trigger('state_init');
 		});
 

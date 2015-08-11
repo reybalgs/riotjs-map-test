@@ -47,15 +47,27 @@ function ExploreStore() {
   // Any number of views can emit actions/events without knowing the specifics of the back-end.
   // This store can easily be swapped for another, while the view components remain untouched.
 
-  self.on('stateInit', function() {
+  self.on('state_init', function() {
+    riot.route.exec(function(modeParam, searchParam) {
+      if(searchParam == 'gallery'){
+        self.state.mode = 'gallery';
+      }
+      else if(searchParam == 'list'){
+        self.state.mode = 'list';
+      }
+      else{
+        self.state.mode = 'map';
+      }
+      if(searchParam != '' || searchParam != undefined){
+        self.state.search = searchParam;
+      }
+      else{
+        self.state.search = '';
+      }
+    });
+
     filterData();
 
-    riot.route.exec(function(modeParam,filterParam,searchParam) {
-      self.state.mode = modeParam;
-      self.state.filter = filterParam;
-      self.state.search = searchParam;
-    })
-    
     self.trigger('map_init', {
       state: self.state, 
       artworks:self.artworks,
@@ -69,7 +81,6 @@ function ExploreStore() {
 
   self.on('mwwSet', function(newMww) {
     self.state.mww = newMww;
-    console.log("RC mwwSet");
     filterData();
     self.trigger('state_changed', {
       state: self.state, 
@@ -78,7 +89,6 @@ function ExploreStore() {
   });
 
   self.on('searchSet', function(newSearch) {
-    console.log("RC searchSet");
     self.state.search = newSearch;
     filterData();
     self.trigger('state_changed', {
@@ -111,7 +121,7 @@ function ExploreStore() {
       if(artNode.mww == self.state.mww || self.state.mww == false){
         if(artNode.region == self.state.region || self.state.region == ''){
           if(self.state.search == '') return this;
-          else if(artNode.name.toLowerCase().indexOf(self.state.search.toLowerCase()) != -1){
+          else if(artNode.name.toLowerCase().indexOf(self.state.search.toLowerCase()) != -1 || artNode.desc.toLowerCase().indexOf(self.state.search.toLowerCase()) != -1){
             return this;
           }
         }

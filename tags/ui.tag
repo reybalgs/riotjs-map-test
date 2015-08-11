@@ -6,7 +6,7 @@
 	<select onchange="{regionSet}" name="regionUI">
 		<option each="{regions}" value="{this.id}">{this.display}</option>
 	</select>
-	<input type="text" name="searchUI" placeholder='Search Things' value='{window.state.search}' onkeyup="{searchSet}"> 
+	<input type="text" name="searchUI" placeholder='Search Things' value='{searchVal}' onchange="{searchSet}" onkeyup="{searchSet}"> 
  	<input type="checkbox" name="mwwUI" value="mww" onchange='{mwwSet}'>MWW<br>
 
 
@@ -14,19 +14,22 @@
 		var self = this;
 
 		self.mwwSet = function(){
-			console.log("mwwSet");
 			RiotControl.trigger('mwwSet', this.mwwUI.checked);
 		}
 
 		self.regionSet = function(){
-			console.log("regionSet");
 			RiotControl.trigger('regionSet', this.regionUI.value);
 		}
 
 		self.searchSet = function() {
-			console.log("searchSet");
 			RiotControl.trigger('searchSet', this.searchUI.value);
 		}
+
+		RiotControl.on('state_changed',function(stateObj){
+			self.searchVal = stateObj.state.search;
+			self.update();
+		});
+
 	</script>
 	<style scoped>
 		:scoped{

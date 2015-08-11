@@ -105,7 +105,7 @@
 					if(state.search ==''){
 						marker.setVisible(true);
 					}
-					else if(marker.title.toLowerCase().indexOf(state.search.toLowerCase()) != -1){
+					else if(marker.title.toLowerCase().indexOf(state.search.toLowerCase()) != -1 || marker.desc.toLowerCase().indexOf(state.search.toLowerCase()) != -1){
 						marker.setVisible(true);
 					}
 					else{
