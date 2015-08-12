@@ -1,4 +1,4 @@
-<map id="map">
+<mapping id="map">
 
 <script>
 
@@ -101,7 +101,7 @@
 	function filterPoints(state){
 		_.each(mapMarkers,function(marker){
 			if(marker.mww == state.mww || state.mww != true){
-				if(marker.region == state.region || state.region == ''){
+				if(marker.region == state.region || state.region == '0'){
 					if(state.search ==''){
 						marker.setVisible(true);
 					}
@@ -130,10 +130,10 @@
 
 <style scoped>
 	:scope{
-		display:block;
+		display: block;
 		width: 100vw;
 		height: 90vh;
 		margin: 20px 0;
 	}
 </style>
-</map>
+</mapping>

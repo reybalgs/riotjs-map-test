@@ -1,13 +1,30 @@
 <gallery-item>
-	<div>
-		<b>{name}:</b><span>{desc}</span>
-	</div>
+	<article class="art-view1">
+		<img src="https://unsplash.it/264/271?image={imageID}">
+		<div class="art-text">
+			<h1>{name}:</h1>
+			<span>{desc}</span>
+		</div>
+	</article>
 	<style scoped>
-		/*:scope{
-			width: 50%;
+		:scope{
+			width: 25%;
 			display: inline-block;
-			padding: 20px;
-			color: #c4c4c4;
-		};*/
+			vertical-align: top;
+		};
+
+		article{
+		    width: 90%;
+    		margin: 25px 5%;
+		}
+		.art-text{
+			display: block;
+		}
+		h1{
+			font-size: 24px;
+		}
+		span{
+
+		}
 	</style>
 </gallery-item>
