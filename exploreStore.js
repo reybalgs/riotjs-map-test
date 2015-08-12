@@ -40,11 +40,12 @@ function ExploreStore() {
         self.state.region = regionParam;
       }
       else{
-        self.state.region = 'All';
+        self.state.region = '0';
       }
 
       if(searchParam != '' && searchParam != undefined){
         self.state.search = searchParam;
+        console.log("searchParam",searchParam);
       }
       else{
         self.state.search = '';
@@ -52,7 +53,11 @@ function ExploreStore() {
     });
 
     filterData();
-    
+
+    self.trigger('map_init',{
+      state: self.state
+    })
+
     self.trigger('state_changed', {
       state: self.state, 
       results: self.results

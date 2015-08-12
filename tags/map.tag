@@ -32,15 +32,12 @@
 
 	self.on('mount',function(){
 		console.log('map mount');
-		self.initializeMap();
-		self.drawPoints();
 	});
 
-	// RiotControl.on('map_init', function(stateObj){
-	// 	console.log('map init');
-	// 	self.initializeMap();
-	// 	self.drawPoints();
-	// })
+	RiotControl.on('map_init', function(stateObj){
+		self.initializeMap();
+		self.drawPoints();
+	})
 
 	RiotControl.on('state_changed', function(stateObj){
 		filterPoints(stateObj.state)
@@ -52,7 +49,6 @@
 	// })
 
 	self.initializeMap = function() {
-		console.log("initializeMap");
 	  var mapProp = {
 	    center:new google.maps.LatLng(39.961455,-75.148097),
 	    zoom:12,
@@ -60,11 +56,7 @@
 	    styles: styles,
 	  };
 
-	  console.log(document.getElementById("map"));
-	  console.log(document.querySelector("map"));
-
 	  map = new google.maps.Map(document.getElementById("map"),mapProp);
-	  console.log("MAP",map);
 	}
 
 	function drawPoint(pointData){
