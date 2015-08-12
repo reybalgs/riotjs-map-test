@@ -52,12 +52,7 @@ function ExploreStore() {
     });
 
     filterData();
-
-    self.trigger('map_init', {
-      state: self.state, 
-      artworks:self.artworks,
-    })
-
+    
     self.trigger('state_changed', {
       state: self.state, 
       results: self.results

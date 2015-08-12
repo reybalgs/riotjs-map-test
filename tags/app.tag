@@ -1,8 +1,8 @@
 <app>	
 	<ui></ui>
-	<gallery if="{activeMode == 'gallery'}"></gallery>
-	<mapping if="{activeMode == 'map'}" id="map"></mapping>
-	<listing if="{activeMode == 'list'}"></listing>
+	<map show="{ mapIsActive }" id="map"></map>
+	<gallery show="{ galleryIsActive }"></gallery>
+	<listing show="{ listingIsActive }"></listing>
 
 	<script>
 		var self = this;
@@ -22,27 +22,25 @@
 		// 	{name: "Meek's Neighborhood", desc:'"Meet me at twentysomething and berks"', mww: true , lat: 39.983646, lon:-75.171908, region: 5}
 		// ];
 
-		// riot.route(function(modeP) {
-		// 	console.log("ROUTE 2");
-		// 	RiotControl.trigger('route_set',{
-	 //      		modeParam: modeP,
-	 //      	});
-		// })
-
-		// riot.route.exec(function(modeP) {
-		// 	console.log("ROUTE 1");
-	 //      	RiotControl.trigger('route_set',{
-	 //      		modeParam: modeP
-	 //      	});
-  //   	})
-
 		self.on('mount',function(){
 			console.log("MOUNT");
 			RiotControl.trigger('state_init');
 		});
 
 		RiotControl.on('state_changed',function(stateObj){
-			self.activeMode = stateObj.state.mode;
+			self.mapIsActive = false;
+			self.galleryIsActive = false;
+			self.listingIsActive = false;
+
+			if(stateObj.state.mode == 'gallery'){
+				self.galleryIsActive = true;
+			}
+			else if(stateObj.state.mode == 'list'){
+				self.listingIsActive = true;
+			}
+			else{
+				self.mapIsActive = true;
+			}
 
 			riot.route(stateObj.state.mode + "/" + stateObj.state.region + "/" + stateObj.state.search);
 			self.update();
