@@ -44,8 +44,7 @@ function ExploreStore() {
       }
 
       if(searchParam != '' && searchParam != undefined){
-        self.state.search = searchParam;
-        console.log("searchParam",searchParam);
+        self.state.search = searchParam.replace(/-/g, ' ');
       }
       else{
         self.state.search = '';
@@ -106,7 +105,7 @@ function ExploreStore() {
       if(artNode.mww == self.state.mww || self.state.mww == false){
         if(artNode.region == self.state.region || self.state.region == '0'){
           if(self.state.search == '') return this;
-          else if(artNode.name.toLowerCase().indexOf(self.state.search.toLowerCase()) != -1 || artNode.desc.toLowerCase().indexOf(self.state.search.toLowerCase()) != -1){
+          else if(artNode.name.toLowerCase().replace(/-/g, ' ').indexOf(self.state.search.toLowerCase()) != -1 || artNode.desc.replace(/-/g, ' ').toLowerCase().indexOf(self.state.search.toLowerCase()) != -1){
             return this;
           }
         }

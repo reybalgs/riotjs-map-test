@@ -42,7 +42,7 @@
 				self.mapIsActive = true;
 			}
 
-			riot.route(stateObj.state.mode + "/" + stateObj.state.region + "/" + stateObj.state.search);
+			riot.route(stateObj.state.mode + "/" + stateObj.state.region + "/" + stateObj.state.search.replace(/\s+/g, '-'));
 			self.update();
 		});
 
