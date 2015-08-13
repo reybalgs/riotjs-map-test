@@ -24,6 +24,24 @@
 			// The anchor for this image is the base of the flagpole at 0,32.
 			anchor: new google.maps.Point(12, 36)
  		},
+ 		regMarkerFaded = {
+			url: 'images/pin_red_faded.png',
+			// This marker is 20 pixels wide by 32 pixels tall.
+			size: new google.maps.Size(25, 36),
+			// The origin for this image is 0,0.
+			origin: new google.maps.Point(0,0),
+			// The anchor for this image is the base of the flagpole at 0,32.
+			anchor: new google.maps.Point(12, 36)
+ 		},
+ 		mwwMarkerFaded = {
+			url: 'images/pin_green_faded.png',
+			// This marker is 20 pixels wide by 32 pixels tall.
+			size: new google.maps.Size(25, 36),
+			// The origin for this image is 0,0.
+			origin: new google.maps.Point(0,0),
+			// The anchor for this image is the base of the flagpole at 0,32.
+			anchor: new google.maps.Point(12, 36)
+ 		},
 		styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"labels.text","stylers":[{"saturation":"-100"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"lightness":"52"},{"gamma":"1.00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"saturation":"-100"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#e5e9bb"}]},{"featureType":"poi.park","elementType":"labels.text","stylers":[{"saturation":"-100"}]},{"featureType":"poi.park","elementType":"labels.icon","stylers":[{"saturation":"-100"}]},{"featureType":"poi.place_of_worship","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi.sports_complex","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi.sports_complex","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"gamma":"1.00"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.fill","stylers":[{"color":"#f8bb1b"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#62cccb"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]}],
 
  		infowindow = new google.maps.InfoWindow({
@@ -81,6 +99,14 @@
 		
 		google.maps.event.addListener(point, 'click', (function (point) {
 	        return function () {
+        	 	_.each(mapMarkers, function(marker){
+	        	 	marker.setMap(null);
+	        		if(marker.mww) marker.setIcon('images/pin_red_faded.png');
+	        		else marker.setIcon('images/pin_green_faded.png');
+	        	 	marker.setMap(map);
+	        	})
+	        	if(point.mww) point.icon = mwwMarker;
+	        	else point.icon = regMarker;
 	            infowindow.setContent('<strong>' + point.title + "</strong><br>" + point.desc);
 	            infowindow.open(map, point);
 	            map.panTo(this.getPosition());
