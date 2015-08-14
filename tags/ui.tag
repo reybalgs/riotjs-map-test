@@ -14,12 +14,13 @@
 		var self = this;
 
 		self.regions = [
-			{id: '0', display:"All"},  
-			{id: '1', display:"Fishtown"},
-			{id: '2', display:"Northern Liberties"},
-			{id: '3', display:"East Poplar"},
-			{id: '4', display:"Fairmount"},
-			{id: '5', display:"North Philly"},
+			{id: '0', display: "All"},  
+			{id: '1', display: "Fishtown"},
+			{id: '2', display: "Northern Liberties"},
+			{id: '3', display: "East Poplar"},
+			{id: '4', display: "Fairmount"},
+			{id: '5', display: "North Philly"},
+			{id: '6', display: "Parkway"},
 		];
 
 		self.mwwSet = function(){

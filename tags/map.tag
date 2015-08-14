@@ -5,6 +5,8 @@
 	var self = this;
 
  	var map,
+ 		panToFocal,
+ 		
  		mapMarkers = [],
 		regMarker = {
 			url: 'images/pin_red.png',
@@ -85,6 +87,7 @@
 		else marker = regMarker;
 
 		var point = new google.maps.Marker({
+			id: p.id,
 			title: p.title,
 			mww: p.mww,
 			desc: p.desc,
@@ -101,8 +104,8 @@
 	        return function () {
         	 	_.each(mapMarkers, function(marker){
 	        	 	marker.setMap(null);
-	        		if(marker.mww) marker.setIcon('images/pin_red_faded.png');
-	        		else marker.setIcon('images/pin_green_faded.png');
+	        		if(marker.mww) marker.setIcon('images/pin_green_faded.png');
+	        		else marker.setIcon('images/pin_red_faded.png');
 	        	 	marker.setMap(map);
 	        	})
 	        	if(point.mww) point.icon = mwwMarker;
@@ -118,6 +121,7 @@
 	self.drawPoints = function(stateObj){
 		_.each(window.artworks,function(artItem){
 			drawPoint({
+				id: artItem.id,
 				title: artItem.name,
 				mww: artItem.mww,
 				desc: artItem.desc,
@@ -129,14 +133,20 @@
 	}
 
 	function filterPoints(state){
+
+		var filteredResultCoords = [];//for aggregated zoom/pan functionality
+		var avgLat = 0;
+		var avgLon = 0;
+
 		_.each(mapMarkers,function(marker){
 			if(marker.mww == state.mww || state.mww != true){
 				if(marker.region == state.region || state.region == '0'){
-					if(state.search ==''){
+					if(state.search =='' || marker.title.toLowerCase().indexOf(state.search.toLowerCase()) != -1 || marker.desc.toLowerCase().indexOf(state.search.toLowerCase()) != -1){
 						marker.setVisible(true);
-					}
-					else if(marker.title.toLowerCase().indexOf(state.search.toLowerCase()) != -1 || marker.desc.toLowerCase().indexOf(state.search.toLowerCase()) != -1){
-						marker.setVisible(true);
+						filteredResultCoords.push({
+							lat: marker.position.G,
+							lon: marker.position.K,
+						});
 					}
 					else{
 						marker.setVisible(false);
@@ -150,6 +160,35 @@
 				marker.setVisible(false);
 			}
 		})
+
+		if(filteredResultCoords.length > 0){
+			_.each(filteredResultCoords,function(coords){
+				avgLat += coords.lat;
+				avgLon += coords.lon;
+			});
+
+			filteredResultCoordsLength = filteredResultCoords.length
+			avgLat = avgLat / filteredResultCoordsLength;
+			avgLon = avgLon / filteredResultCoordsLength;
+
+			clearTimeout(panToFocal);
+		    panToFocal = setTimeout(function(){
+		    	infowindow.close();
+				if(avgLat != undefined) map.panTo(new google.maps.LatLng(avgLat,avgLon));
+		    }, 100);
+		    if(filteredResultCoords.length <= 5 ){
+		    	map.setZoom(16);
+		    }
+		    else if(filteredResultCoords.length <= 20 && filteredResultCoords.length > 5){
+		    	map.setZoom(15);
+		    }
+		    else if(filteredResultCoords.length <= 50 && filteredResultCoords.length > 20){
+		    	map.setZoom(14);
+		    }
+		    else{
+		    	map.setZoom(13);
+		    }
+		}
 	}
 
 	RiotControl.on('state_changed',function(){
